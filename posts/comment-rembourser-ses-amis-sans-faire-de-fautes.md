@@ -71,7 +71,7 @@ En la réécrivant on peut la simplifie pour qu'Alice ne donne pas d'argent à B
 ::: info
 Les très attentifs ou très malins me diront : "Mais Nirina, j'ai un algorithme bien plus simple ! Tu prends la personne à qui tu dois le plus, tu prends la personne qui doit le plus d'argent, tu lui fais rembourser un maximum d'argent, puis tu recommences avec à qui on doit le plus d'argent et qui en doit le plus ?"
 
-C'est une excellente remarque, mais lis la suite de l'article et tu verras pourquoi je rejette ta proposition ?
+C'est une excellente remarque, mais lis la suite de l'article et tu verras pourquoi je rejette ta proposition !
 :::
 
 ## Un début d'optimisation
@@ -211,4 +211,88 @@ Oui, maintenant ça se voit que Charlie pouvait juste donner 31€ à Bob, et do
 
 ## La généralisation
 
-L'article a LARGEMENT explosé en taille... donc ce sera pour une partie 2...
+Revenons à nos 5 ami·es parti·es en vacances ! Combien devions-nous déjà en tout ? Un petit rappel :
+
+|Nom|Total dépensé|
+|-|-|
+|Alice|333|
+|Bob|213|
+|Charlie|0|
+|Eve|10|
+|Vous|50|
+
+Mais !!! Iy a un plot twist ! Alice et Bob n'ont payé que pour eux-mêmes et Charlie, tandis qu'Eve et vous avez dépensés pour tout le groupe. Reconstruisons le registre de toutes les dépenses :
+
+||Alice|Bob|Charlie|Eve|Vous|Un petit commentaire|
+|---|---|---|---|---|---|---|
+||222€|-111€|-111€|0|0|La dépense pour Alice pour les trois premiers|
+||-71€|142€|-71€|0|0|La dépense pour Bob pour les trois premiers|
+||-2|-2|-2|8|-2|La dépense pour Eve|
+||-10|-10|-10|-10|40|La dépense pour Vous|
+||||||||
+|**Total**|139|19|-194|-2|38||
+
+Vous êtes **bizarrement dans le positif** ! Comment rembourser tout le monde ? Plusieurs constats :
+
+- Charlie doit toujours de l'argent à tout le monde
+- Alice doit bien recevoir le plus d'argent de toutes et tous
+- Vous êtes bien dans le négatif !
+
+On pourrait tenter d'appliquer le fameux algorithme dont je mentionne maintenant trois fois en "info" pour trouver une solution. Qu'est-ce qu'elle donnerait :
+
+- Charlie est la plus dans le négatif
+- Alice est la plus dans le positif
+- Charlie envoie 139€ à Alice
+- Alice passe à 0, Charlie passe à -55€
+- Charlie est toujours la plus dans le négatif
+- Vous êtes le plus dans le positif
+- Charlie envoie 38€ à vous
+- Vous passez à 0€, Charlie passe à -17€
+- Charlie est toujours la plus dans le négatif
+- Bob est le plus dans le positif
+- Charlie envoie 17€ à Bob
+- Charlie passe à 0, Bob passe à 2€ restants
+- Eve envoie 2€ à Bob
+
+Au total nous avons :
+
+- Charlie doit 139€ à Alice
+- Charlie vous doit 38€
+- Charlie doit 17€ à Bob
+- Eve doit 2€ à Bo
+
+- Charlie est le plus dans le négatif
+- Alice est le plus dans le positif
+- Charlie envoie 121,2€ à Alice
+- Alice passe à 90,6 dûs
+- Eve est le plus dans le négatif
+- Bob est le plus dans le positif
+- Eve envoie 91,8€ à Bob
+- Bob passe à 0€
+- Eve passe à 19,4€ dûs
+- Vous êtes le plus dans le négatif
+- Alice est la plus dans le positif
+- Vous envoyez 71,2€ à Alice
+- Vous passez à 0
+- Alice doit recevoir 19,4€
+- Il ne reste plus qu'Eve et Alice
+- Eve envoie 19,4€ à Alice
+
+Bilan des courses :
+
+- Charlie doit 121,2€ à Alice
+- Eve doit 91,8€ à Bob
+- Vous devez 71,2€ à Alice
+- Eve doit 19,4€ à Alice
+
+Est-ce que la solution est optimale ? Son total d'argent viré est 303,6
+
+Je vous prétends qu'il existe une meilleure solution, dont le total viré est : 303,6
+
+qui	doit	à qui
+Charlie	80.6€	Alice
+Charlie	40.6€	Bob
+Eve	75.6€	Alice
+Eve	35.6€	Bob
+Vous	55.6€	Alice
+Vous	15.6€	Bob
